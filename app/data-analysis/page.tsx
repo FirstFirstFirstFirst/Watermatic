@@ -1,13 +1,13 @@
-import type { Metadata } from "next"
-import { AnalysisSummary } from "@/components/data-analysis/analysis-summary"
-import { ComparisonChart } from "@/components/data-analysis/comparison-chart"
-import { EfficiencyChart } from "@/components/data-analysis/efficiency-chart"
-import { LeakageMap } from "@/components/data-analysis/leakage-map"
+import type { Metadata } from "next";
+import { AnalysisSummary } from "@/components/data-analysis/analysis-summary";
+import { ComparisonChart } from "@/components/data-analysis/comparison-chart";
+import { EfficiencyChart } from "@/components/data-analysis/efficiency-chart";
+import { LeakageMap } from "@/components/data-analysis/leakage-map";
 
 export const metadata: Metadata = {
   title: "Data Analysis | Water Management System",
   description: "Analyze water usage data and identify trends",
-}
+};
 
 export default function DataAnalysisPage() {
   return (
@@ -22,6 +22,5 @@ export default function DataAnalysisPage() {
       </div>
       <LeakageMap />
     </div>
-  )
+  );
 }
-

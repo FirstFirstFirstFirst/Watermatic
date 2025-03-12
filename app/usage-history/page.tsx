@@ -1,13 +1,13 @@
-import type { Metadata } from "next"
-import { UsageHistoryChart } from "@/components/usage-history/usage-history-chart"
-import { UsageSummary } from "@/components/usage-history/usage-summary"
-import { UsageTable } from "@/components/usage-history/usage-table"
-import { UsageTrends } from "@/components/usage-history/usage-trends"
+import type { Metadata } from "next";
+import { UsageHistoryChart } from "@/components/usage-history/usage-history-chart";
+import { UsageSummary } from "@/components/usage-history/usage-summary";
+import { UsageTable } from "@/components/usage-history/usage-table";
+import { UsageTrends } from "@/components/usage-history/usage-trends";
 
 export const metadata: Metadata = {
   title: "Usage History | Water Management System",
   description: "View and analyze your water usage history",
-}
+};
 
 export default function UsageHistoryPage() {
   return (
@@ -22,6 +22,5 @@ export default function UsageHistoryPage() {
       </div>
       <UsageTable />
     </div>
-  )
+  );
 }
-

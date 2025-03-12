@@ -1,14 +1,14 @@
-import type { Metadata } from "next"
-import { DashboardMetrics } from "@/components/dashboard/dashboard-metrics"
-import { FlowRateChart } from "@/components/dashboard/flow-rate-chart"
-import { RecentAlerts } from "@/components/dashboard/recent-alerts"
-import { WaterQualityCard } from "@/components/dashboard/water-quality-card"
-import { WaterUsageCard } from "@/components/dashboard/water-usage-card"
+import type { Metadata } from "next";
+import { DashboardMetrics } from "@/components/dashboard/dashboard-metrics";
+import { FlowRateChart } from "@/components/dashboard/flow-rate-chart";
+import { RecentAlerts } from "@/components/dashboard/recent-alerts";
+import { WaterQualityCard } from "@/components/dashboard/water-quality-card";
+import { WaterUsageCard } from "@/components/dashboard/water-usage-card";
 
 export const metadata: Metadata = {
   title: "Dashboard | Water Management System",
   description: "Monitor your water usage and system status",
-}
+};
 
 export default function DashboardPage() {
   return (
@@ -26,6 +26,5 @@ export default function DashboardPage() {
       </div>
       <RecentAlerts />
     </div>
-  )
+  );
 }
-
