@@ -88,9 +88,9 @@ export function FlowRateChart({ className }: FlowRateChartProps) {
         lineWidth: 3,
       });
 
-      const seriesData = data.map((item, index) => ({
-        time: index as Time, // Type assertion to Time
-        value: item,
+      const seriesData = data.map((item) => ({
+        time: item.time as Time,
+        value: item.value,
       }));
 
       areaSeries.setData(seriesData);
