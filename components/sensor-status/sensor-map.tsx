@@ -8,6 +8,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge";
 import { sensors, type Sensor, type BuildingName } from "@/mockData/sensors";
 
 export function SensorMap() {
@@ -61,26 +68,26 @@ export function SensorMap() {
 
   // Function to render a sensor with its tooltip
   const renderSensor = (sensor: Sensor) => (
-    <div
-      key={sensor.id}
-      className={`group relative flex h-6 w-6 cursor-pointer items-center justify-center rounded-full ${getStatusColor(
-        sensor.status
-      )} shadow-md transition-all hover:scale-110`}
-      title={`${sensor.id}: ${sensor.type} - ${sensor.status} (${sensor.battery}% battery)`}
-    >
-      {getIconComponent(sensor.iconType)}
-
-      {/* Tooltip that appears on hover */}
-      <div className="absolute -top-16 left-1/2 hidden -translate-x-1/2 transform rounded-md bg-slate-800 px-2 py-1 text-xs text-white opacity-0 shadow-lg transition-opacity group-hover:block group-hover:opacity-100">
+    <Tooltip key={sensor.id}>
+      <TooltipTrigger asChild>
+        <div
+          className={`flex h-6 w-6 cursor-pointer items-center justify-center rounded-full ${getStatusColor(
+            sensor.status
+          )} shadow-md transition-all hover:scale-110`}
+        >
+          {getIconComponent(sensor.iconType)}
+        </div>
+      </TooltipTrigger>
+      <TooltipContent>
         <div className="font-bold">
-          {sensor.type} {getSensorLabel(sensor)}
+          {sensor.type}{" "}
+          {getSensorLabel(sensor) ? `(${getSensorLabel(sensor)})` : ""}
         </div>
         <div className="text-xs">
           {sensor.status} ({sensor.battery}%)
         </div>
-        <div className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 transform bg-slate-800"></div>
-      </div>
-    </div>
+      </TooltipContent>
+    </Tooltip>
   );
 
   // Function to render a row of sensors with proper spacing
@@ -105,53 +112,64 @@ export function SensorMap() {
       </CardHeader>
       <CardContent>
         <div className="relative h-[350px] w-full rounded-md border bg-muted/20 p-4">
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-            <div className="flex flex-col items-center gap-4">
-              {/* Building A - Top */}
-              <div className="h-auto w-64 rounded-md bg-yellow-200 p-2 text-center font-medium">
-                Building A
-                {renderSensorRow(getSensorsByBuilding("Building A"), 5)}
-              </div>
-
-              <div className="flex gap-4">
-                {/* Building B - Left */}
-                <div className="h-auto w-32 rounded-md bg-pink-200 p-2 text-center font-medium">
-                  Building B
-                  {renderSensorRow(getSensorsByBuilding("Building B"), 3)}
+          <TooltipProvider delayDuration={100}>
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+              <div className="flex flex-col items-center gap-4">
+                {/* Building A - Top */}
+                <div className="h-auto w-64 rounded-md bg-yellow-200 p-2 text-center font-medium">
+                  Building A
+                  {renderSensorRow(getSensorsByBuilding("Building A"), 5)}
                 </div>
 
-                {/* Swimming Pool - Center */}
-                <div className="h-auto w-32 rounded-md bg-blue-200 p-2 text-center font-medium">
-                  Swimming Pool
-                  {renderSensorRow(getSensorsByBuilding("Swimming Pool"), 3)}
-                </div>
+                <div className="flex gap-4">
+                  {/* Building B - Left */}
+                  <div className="h-auto w-32 rounded-md bg-pink-200 p-2 text-center font-medium">
+                    Building B
+                    {renderSensorRow(getSensorsByBuilding("Building B"), 3)}
+                  </div>
 
-                {/* Building C - Right */}
-                <div className="h-auto w-32 rounded-md bg-green-200 p-2 text-center font-medium">
-                  Building C
-                  {renderSensorRow(getSensorsByBuilding("Building C"), 3)}
+                  {/* Swimming Pool - Center */}
+                  <div className="h-auto w-32 rounded-md bg-blue-200 p-2 text-center font-medium">
+                    Swimming Pool
+                    {renderSensorRow(getSensorsByBuilding("Swimming Pool"), 3)}
+                  </div>
+
+                  {/* Building C - Right */}
+                  <div className="h-auto w-32 rounded-md bg-green-200 p-2 text-center font-medium">
+                    Building C
+                    {renderSensorRow(getSensorsByBuilding("Building C"), 3)}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </TooltipProvider>
 
           <div className="absolute bottom-4 right-4 flex flex-wrap items-center gap-4 rounded-md bg-white/80 p-2 text-xs shadow-md">
             <div className="flex items-center gap-1">
-              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-green-500 shadow-sm">
+              <Badge
+                variant="custom"
+                className="h-5 w-5 rounded-full bg-green-500 p-0 flex items-center justify-center"
+              >
                 <Gauge className="h-3 w-3 text-white" />
-              </div>
+              </Badge>
               <span className="font-medium">Normal</span>
             </div>
             <div className="flex items-center gap-1">
-              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-yellow-500 shadow-sm">
+              <Badge
+                variant="custom"
+                className="h-5 w-5 rounded-full bg-yellow-500 p-0 flex items-center justify-center"
+              >
                 <Activity className="h-3 w-3 text-white" />
-              </div>
+              </Badge>
               <span className="font-medium">Warning</span>
             </div>
             <div className="flex items-center gap-1">
-              <div className="flex h-5 w-5 items-center justify-center rounded-full bg-red-500 shadow-sm">
+              <Badge
+                variant="custom"
+                className="h-5 w-5 rounded-full bg-red-500 p-0 flex items-center justify-center"
+              >
                 <Droplet className="h-3 w-3 text-white" />
-              </div>
+              </Badge>
               <span className="font-medium">Alert</span>
             </div>
           </div>
