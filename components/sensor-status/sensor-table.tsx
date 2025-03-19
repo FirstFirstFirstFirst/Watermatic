@@ -1,77 +1,62 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Battery, BatteryCharging, BatteryWarning, Signal, SignalLow, SignalMedium } from "lucide-react"
+import { useState } from "react";
+import {
+  Battery,
+  BatteryCharging,
+  BatteryWarning,
+  Signal,
+  SignalLow,
+  SignalMedium,
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { sensors } from "@/mockData/sensors";
 export function SensorTable() {
-  const [view, setView] = useState<"all" | "alerts">("all")
+  const [view, setView] = useState<"all" | "alerts">("all");
 
-  const sensors = [
-    {
-      id: "S001",
-      location: "Building A - Floor 2",
-      type: "Flow Meter",
-      battery: 95,
-      signal: "Strong",
-      status: "Normal",
-      lastReading: "10 min ago",
-    },
-    {
-      id: "S002",
-      location: "Building A - Room 206A",
-      type: "Leak Detector",
-      battery: 87,
-      signal: "Medium",
-      status: "Alert",
-      lastReading: "5 min ago",
-    },
-    {
-      id: "S003",
-      location: "Swimming Pool",
-      type: "pH Sensor",
-      battery: 72,
-      signal: "Strong",
-      status: "Warning",
-      lastReading: "2 min ago",
-    },
-    {
-      id: "S004",
-      location: "Building B - Main Line",
-      type: "Pressure Sensor",
-      battery: 91,
-      signal: "Strong",
-      status: "Normal",
-      lastReading: "Just now",
-    },
-    {
-      id: "S005",
-      location: "Building C - Floor 3",
-      type: "Flow Meter",
-      battery: 23,
-      signal: "Weak",
-      status: "Normal",
-      lastReading: "15 min ago",
-    },
-  ]
-
-  const filteredSensors = view === "all" ? sensors : sensors.filter((sensor) => sensor.status !== "Normal")
+  const filteredSensors =
+    view === "all"
+      ? sensors
+      : sensors.filter((sensor) => sensor.status !== "Normal");
 
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
           <CardTitle>Sensor Status</CardTitle>
-          <CardDescription>Real-time status of all water sensors</CardDescription>
+          <CardDescription>
+            Real-time status of all water sensors
+          </CardDescription>
         </div>
         <div className="flex gap-2">
-          <Button variant={view === "all" ? "default" : "outline"} size="sm" onClick={() => setView("all")}>
+          <Button
+            variant={view === "all" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setView("all")}
+          >
             All
           </Button>
-          <Button variant={view === "alerts" ? "default" : "outline"} size="sm" onClick={() => setView("alerts")}>
+          <Button
+            variant={view === "alerts" ? "default" : "outline"}
+            size="sm"
+            onClick={() => setView("alerts")}
+          >
             Alerts
           </Button>
         </div>
@@ -125,8 +110,8 @@ export function SensorTable() {
                       sensor.status === "Normal"
                         ? "bg-green-100 text-green-800"
                         : sensor.status === "Warning"
-                          ? "bg-yellow-100 text-yellow-800"
-                          : "bg-red-100 text-red-800"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : "bg-red-100 text-red-800"
                     }`}
                   >
                     {sensor.status}
@@ -139,6 +124,5 @@ export function SensorTable() {
         </Table>
       </CardContent>
     </Card>
-  )
+  );
 }
-
