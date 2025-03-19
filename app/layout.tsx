@@ -21,15 +21,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className="w-full h-full">
+      <body className={`${inter.className} w-full h-full`}>
         <ThemeProvider attribute="class" defaultTheme="light">
           <SidebarProvider>
-            <div className="flex min-h-screen flex-col">
+            <div className="flex min-h-screen w-full flex-col">
               <Header />
-              <div className="flex flex-1">
+              <div className="flex flex-1 w-full">
                 <AppSidebar />
-                <main className="flex-1 p-6">{children}</main>
+                <main className="flex-1 p-6 w-full">{children}</main>
               </div>
             </div>
             <Toaster />

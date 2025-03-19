@@ -100,3 +100,9 @@
   fill: url(#gradient-area);
 }
 
+html,
+body {
+  min-height: 100vh;
+  padding-bottom: 50px; /* Adjust as needed */
+  box-sizing: border-box;
+}
