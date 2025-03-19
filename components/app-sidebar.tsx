@@ -30,26 +30,31 @@ export function AppSidebar() {
       title: "Dashboard",
       href: "/",
       icon: Home,
+      isMockData: true,
     },
     {
       title: "Usage History",
       href: "/usage-history",
       icon: History,
+      isMockData: true,
     },
     {
       title: "Sensor Status",
       href: "/sensor-status",
       icon: Droplets,
+      isMockData: true,
     },
     {
       title: "Maintenance",
       href: "/maintenance",
       icon: Wrench,
+      isMockData: true,
     },
     {
       title: "Data Analysis",
       href: "/data-analysis",
       icon: BarChart3,
+      isMockData: true,
     },
   ];
 
@@ -75,11 +80,20 @@ export function AppSidebar() {
                     pathname === route.href ||
                     (route.href !== "/" && pathname.startsWith(route.href))
                   }
-                  tooltip={route.title}
+                  tooltip={
+                    route.title + (route.isMockData ? " (Mock Data)" : "")
+                  }
                 >
                   <Link href={route.href} className="w-full">
                     <route.icon className="h-4 w-4" />
-                    <span>{route.title}</span>
+                    <span className="flex items-center gap-2">
+                      {route.title}
+                      {route.isMockData && (
+                        <span className="ml-auto text-xs font-medium rounded-full bg-blue-200 text-blue-700 px-2 py-0.5">
+                          MOCK
+                        </span>
+                      )}
+                    </span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useRef } from "react";
 import {
   Card,
@@ -8,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { createChart, ColorType, AreaSeries, Time } from "lightweight-charts";
+import { ColorType, Time } from "lightweight-charts";
 
 interface FlowRateChartProps {
   className?: string;
@@ -33,7 +32,12 @@ export function FlowRateChart({ className }: FlowRateChartProps) {
   ];
 
   useEffect(() => {
-    if (chartContainerRef.current) {
+    const initChart = async () => {
+      if (!chartContainerRef.current) return;
+
+      // Import the library dynamically to ensure it's only loaded in the browser
+      const { createChart, AreaSeries } = await import("lightweight-charts");
+
       // Clear any existing chart
       const element = chartContainerRef.current;
       element.innerHTML = "";
@@ -58,42 +62,43 @@ export function FlowRateChart({ className }: FlowRateChartProps) {
         timeScale: {
           borderVisible: false,
           timeVisible: true,
-          tickMarkFormatter: (time: number) => {
-            const date = new Date(time * 1000);
-            const month = date.toLocaleString("default", { month: "short" });
-            const day = date.getDate();
-            return `${month} ${day}`;
-          },
         },
         handleScroll: false,
         handleScale: false,
+        width: element.clientWidth,
+        height: element.clientHeight,
       };
 
       const chart = createChart(element, chartOptions);
 
       // Make chart responsive
-      const resizeObserver = new ResizeObserver((entries) => {
-        if (entries.length === 0 || !element) return;
-        const { width, height } = entries[0].contentRect;
-        chart.applyOptions({ width, height });
+      const resizeObserver = new ResizeObserver(() => {
+        if (!element) return;
+        chart.applyOptions({
+          width: element.clientWidth,
+          height: element.clientHeight || 300,
+        });
+        chart.timeScale().fitContent();
       });
 
       resizeObserver.observe(element);
 
       // Add area series
       const areaSeries = chart.addSeries(AreaSeries, {
-        lineColor: "hsl(var(--primary))",
-        topColor: "hsla(var(--primary), 0.4)",
-        bottomColor: "hsla(var(--primary), 0.1)",
+        lineColor: "#2962FF", // Primary blue color
+        topColor: "#2962FF",
+        bottomColor: "rgba(41, 98, 255, 0.28)",
         lineWidth: 3,
       });
 
+      // Prepare data in format expected by the chart
       const seriesData = data.map((item) => ({
         time: item.time as Time,
         value: item.value,
       }));
 
       areaSeries.setData(seriesData);
+
       // Fit all data to view
       chart.timeScale().fitContent();
 
@@ -101,11 +106,13 @@ export function FlowRateChart({ className }: FlowRateChartProps) {
         chart.remove();
         resizeObserver.disconnect();
       };
-    }
+    };
+
+    initChart();
   }, []);
 
   return (
-    <Card className={className}>
+    <Card className={`${className} h-full`}>
       <CardHeader>
         <CardTitle>Water Flow Rate Overview</CardTitle>
         <CardDescription>
@@ -113,7 +120,7 @@ export function FlowRateChart({ className }: FlowRateChartProps) {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div ref={chartContainerRef} className="h-[300px] w-full" />
+        <div ref={chartContainerRef} className="h-full w-full min-h-[500px]" />
       </CardContent>
     </Card>
   );
