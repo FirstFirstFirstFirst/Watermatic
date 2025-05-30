@@ -20,7 +20,7 @@ model User {
   updatedAt     DateTime       @updatedAt
   sensorStations SensorStation[]
 
-  Sensor Sensor[]
+  sensors Sensor[]
 }
 
 model Sensor {
@@ -33,7 +33,7 @@ model Sensor {
   user        User     @relation(fields: [userId], references: [id])
   sensorStationId String
   sensorStation SensorStation @relation(fields: [sensorStationId], references: [id])
-  SensorData SensorData[]
+  sensorData SensorData[]
 }
 
 model SensorData {
@@ -57,7 +57,7 @@ model SensorStation {
   updatedAt   DateTime @updatedAt
   userId      String
   user        User     @relation(fields: [userId], references: [id])
-  Sensor Sensor[]
+  sensors Sensor[]
 
   @@index([userId])
 }
