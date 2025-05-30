@@ -40,9 +40,9 @@ model SensorData {
   id          String   @id @default(cuid())
   sensorId    String
   sensor      Sensor   @relation(fields: [sensorId], references: [id])
-  type        String   // e.g., "temperature", "humidity", "pressure"
-  value       Float    // The actual reading value
-  unit        String   // e.g., "°C", "%", "hPa"
+  type        String   
+  value       Float    
+  unit        String   
   createdAt   DateTime @default(now())
 
   @@index([sensorId])
