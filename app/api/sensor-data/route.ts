@@ -54,7 +54,7 @@ export async function GET(request: Request) {
       where: {
         id: sensorId,
         // userId: userId,
-        userId: 1,
+        userId: "1",
       },
     });
 
@@ -99,7 +99,7 @@ export async function POST(request: Request) {
       where: {
         id: sensorStationId,
         // userId: userId,
-        userId: 1,
+        userId: "1",
       },
     });
 
@@ -112,7 +112,7 @@ export async function POST(request: Request) {
         name,
         location,
         // userId,
-        userId: 1,
+        userId: "1",
         sensorStationId,
       },
     });

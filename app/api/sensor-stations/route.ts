@@ -22,7 +22,7 @@ export async function POST(request: Request) {
         name,
         location,
         // userId,
-        userId: 1,
+        userId: "1",
       },
     });
 
@@ -44,7 +44,7 @@ export async function GET() {
     const stations = await prisma.sensorStation.findMany({
       where: {
         // userId,
-        userId: 1,
+        userId: "1",
       },
       include: {
         sensors: true, // Include associated sensors
