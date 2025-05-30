@@ -2,6 +2,35 @@
 
 This document describes the API endpoints available in the Water Management System.
 
+## Demo Environment
+
+The system comes pre-seeded with a demo hotel water management setup, including:
+
+### Sensor Stations
+
+1. Main Building (Ground Floor Utility Room)
+2. Kitchen Area (Main Kitchen)
+3. Pool Complex (Pool Technical Room)
+4. Guest Floors (3rd Floor Utility Room)
+
+### Pre-configured Sensors
+
+- Main Building:
+  - Main Water Meter (Building Main Inlet)
+  - Main Pressure Sensor (Main Water Line)
+- Kitchen Area:
+  - Kitchen Water Meter (Kitchen Main Line)
+  - Dishwasher Flow Meter (Industrial Dishwasher)
+- Pool Complex:
+  - Pool Water Meter (Pool System Inlet)
+  - Pool Leak Detector (Pool Equipment Room)
+- Guest Floors:
+  - Guest Floor Water Meter (3rd Floor Main Line)
+
+### Default User
+
+- Email: manager@grandhotel.com
+
 ## Authentication
 
 All API endpoints are protected and require authentication using Clerk. Make sure to include the necessary authentication headers in your requests.
@@ -115,18 +144,14 @@ GET /api/sensors?stationId=station_id
 #### Add Sensor Reading
 
 ```http
-GET /api/sensor-data?sensorId=sensor_id&type=temperature&value=25.5
+GET /api/sensor-data?sensorId=sensor_id&type=water_flow&value=25.5
 ```
 
 **Supported Sensor Types**
 
-- temperature (°C)
-- humidity (%)
-- pressure (hPa)
-- waterLevel (cm)
-- flow (L/min)
-- ph (pH)
-- tds (ppm)
+- water_flow (m³/h)
+- pressure (bar)
+- moisture (%)
 
 **Response**
 
@@ -134,9 +159,9 @@ GET /api/sensor-data?sensorId=sensor_id&type=temperature&value=25.5
 {
   "id": "reading_id",
   "sensorId": "sensor_id",
-  "type": "temperature",
+  "type": "water_flow",
   "value": 25.5,
-  "unit": "°C",
+  "unit": "m³/h",
   "createdAt": "2024-03-19T..."
 }
 ```
@@ -171,7 +196,7 @@ curl -X POST http://localhost:3000/api/sensors \
 3. Add sensor readings:
 
 ```bash
-curl "http://localhost:3000/api/sensor-data?sensorId=sensor_id_from_step_2&type=temperature&value=25.5"
+curl "http://localhost:3000/api/sensor-data?sensorId=sensor_id_from_step_2&type=water_flow&value=25.5"
 ```
 
 4. View all stations with their sensors:
